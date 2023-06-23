@@ -1,0 +1,37 @@
+{
+  "name": "report-generator",
+  "version": "1.0.0",
+  "description": "biblioteca de geração de relatórios",
+  "main": "index.js",
+  "repository": "https://github.com/ANishimoto/ReportGenerator.git",
+  "authors": [
+    "André O. Nishimoto <andre.nishimoto97@gmail.com>",
+    "Renata Yumi Tanihara de Moraes <yumi.tanihara@hotmail.com>"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=DEV nodemon index",
+    "migrate": "cd src/outbound/database/orm/sequelize && cross-env NODE_ENV=DEV npx sequelize-cli db:migrate --migrations-path migration",
+    "test": "jest --watchAll --collectCoverage",
+    "lint": "npx eslint src/*"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "jest": "^29.1.2",
+    "nodemon": "^2.0.20",
+    "sequelize-cli": "^6.6.0",
+    "supertest": "^6.2.4"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.1.3",
+    "express": "^4.18.2",
+    "mysql2": "^3.3.3",
+    "sequelize": "^6.32.0"
+  }
+}

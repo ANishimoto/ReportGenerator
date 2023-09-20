@@ -5,6 +5,7 @@ import AbstractUseCase from "../AbstractUseCase.js";
 import ValidateUserFieldsStrategy from "../../strategy/user/ValidateUserFieldsStrategy.js";
 import ActivateUserStrategy from "../../strategy/user/ActivateUserStrategy.js";
 import SaveUserStrategy from "../../strategy/user/SaveUserStrategy.js";
+import CreatePasswordHashStrategy from "../../strategy/user/CreatePasswordHashStrategy.js";
 
 export default class CreateUserUseCase extends AbstractUseCase {
     constructor ({
@@ -15,6 +16,7 @@ export default class CreateUserUseCase extends AbstractUseCase {
         this.strategies = [
             new ValidateUserFieldsStrategy(),
             new ActivateUserStrategy(),
+            new CreatePasswordHashStrategy(),
             new SaveUserStrategy({
                 userService: this.userService
             }),

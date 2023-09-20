@@ -42,13 +42,8 @@ export default class UserController extends AbstractController {
         const userModel = new UserModel(req.body);
         const user = this.userMapper.adapt(userModel);
         const result = await this.createUserUseCase.createUser({user});
-        const formatedResponseData = [];
 
-        for (const data of result.data) {
-            formatedResponseData.push(this.userMapper.adapt(data));
-        }
-
-        result.data = formatedResponseData;
+        result.data = '';
         res.status(result.status);
         res.send(result);
     }
@@ -108,13 +103,8 @@ export default class UserController extends AbstractController {
         const user = this.userMapper.adapt(userModel);
         
         const result = await this.updateUserUseCase.updateUser(user, filter);
-        const formatedResponseData = [];
-
-        for (const data of result.data) {
-            formatedResponseData.push(this.userMapper.adapt(data));
-        }
-
-        result.data = formatedResponseData;
+        
+        result.data = '';
         res.status(result.status);
         res.send(result);
     }

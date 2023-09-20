@@ -23,6 +23,16 @@ export default class ValidateUserFieldsStrategy extends AbstractStrategy {
             result.error.push('O campo "password" é obrigatório!');
         }
 
+        if (user.password.length < 8) {
+            result.error.push('O campo "password" deve conter no mínimo 8 caracteres!');
+        }
+
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).+$/;
+
+        if (!regex.test(user.password)) {
+            result.error.push('O campo "password" deve conter ao menos uma letra minúscula, uma letra maiúscula e um caractere especial!');
+        }
+
         if (result.error.length > 0) {
             result.status = 406;
         }

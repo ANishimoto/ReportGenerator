@@ -13,7 +13,8 @@ export default class AbstractModel extends Model {
                 modelName: options.modelName,
                 tableName: options.tableName,
                 underscored: options.underscored,
-                sequelize: connection
+                sequelize: connection,
+                hooks: options.hooks
             }
         );
         return connection.models[options.modelName];

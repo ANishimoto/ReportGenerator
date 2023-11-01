@@ -1,5 +1,5 @@
 import AbstractEntity from "../../../../core/domain/AbstractEntity.js";
-import AbstractModel from "../AbstractModel.js";
+import AbstractDTO from "../AbstractDTO.js";
 
 export default class AbstractMapper {
     constructor() {}
@@ -7,27 +7,27 @@ export default class AbstractMapper {
     adapt(object) {
         switch (object.constructor.name) {
             case `${AbstractEntity.constructor.name}`:
-                return this.adaptEntityToModel(object);
-            case `${AbstractModel.constructor.name}`:
-                return this.adaptModelToEntity(object);
+                return this.adaptEntityToDTO(object);
+            case `${AbstractDTO.constructor.name}`:
+                return this.adaptDTOToEntity(object);
             default:
                 return object;
         }
     }
 
-    adaptEntityToModel(entity) {
-        const model = new AbstractModel();
+    adaptEntityToDTO(entity) {
+        const dto = new AbstractDTO();
         const keys = Object.keys(entity);
         for (const key of keys) {
-            model[key] = entity[key];
+            dto[key] = entity[key];
         }
     }
 
-    adaptModelToEntity(model) {
+    adaptDTOToEntity(dto) {
         const entity = new AbstractEntity();
-        const keys = Object.keys(model);
+        const keys = Object.keys(dto);
         for (const key of keys) {
-            entity[key] = model[key];
+            entity[key] = dto[key];
         }
     }
 }

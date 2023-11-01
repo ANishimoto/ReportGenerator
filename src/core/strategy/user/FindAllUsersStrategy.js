@@ -14,7 +14,7 @@ export default class FindAllUsersStrategy extends AbstractStrategy {
     async execute(filter, result = this.result) {
         try {
             const {count, users} = await this.userService.findAllUsers(filter);
-            result.status = 200;
+            result.status = (users.length === 0) ? 204 : 200;
             result.data = users;
             result.count = count;
         } catch (error) {

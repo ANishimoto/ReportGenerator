@@ -1,7 +1,6 @@
 import IUserService from '../../core/service/IUserService.js';
 import UserFilterMapper from '../database/orm/sequelize/filter/mapper/UserFilterMapper.js';
 import UserMapper from '../database/orm/sequelize/model/mapper/UserMapper.js';
-import UserRepository from '../database/orm/sequelize/repository/UserRepository.js';
 
 export default class UserService extends IUserService {
     constructor({
@@ -13,7 +12,7 @@ export default class UserService extends IUserService {
         this.findOneUser = this.findOneUser.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
         this.updateUser = this.updateUser.bind(this);
-        this.userRepository = new UserRepository();
+        this.userRepository = userRepository;
         this.userMapper =  new UserMapper();
         this.userFilterMapper = new UserFilterMapper();
     }

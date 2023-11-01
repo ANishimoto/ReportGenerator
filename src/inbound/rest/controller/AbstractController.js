@@ -3,7 +3,8 @@ export default class AbstractController {
         this.health = this.health.bind(this);
     }
 
-    async health (req, res, next) {
+    async health (req, res) {
         res.send("I'm fine.");
+        res.end();
     }
 }

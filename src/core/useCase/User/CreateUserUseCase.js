@@ -14,7 +14,9 @@ export default class CreateUserUseCase extends AbstractUseCase {
         super();
         this.userService = userService;
         this.strategies = [
-            new ValidateUserFieldsStrategy(),
+            new ValidateUserFieldsStrategy({
+                userService: this.userService
+            }),
             new ActivateUserStrategy(),
             new CreatePasswordHashStrategy(),
             new SaveUserStrategy({

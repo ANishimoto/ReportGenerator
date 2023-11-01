@@ -5,14 +5,13 @@ export default class AbstractMapper {
     constructor() {}
 
     adapt(object) {
-        switch (object.constructor.name) {
-            case `${AbstractEntity.constructor.name}`:
-                return this.adaptEntityToModel(object);
-            case `${AbstractModel.constructor.name}`:
-                return this.adaptModelToEntity(object);
-            default:
-                return object;
-        }
+        if (object instanceof Abstract)
+            return this.adaptEntityToModel(object);
+        
+        if (object instanceof AbstractModel)
+            return this.adaptModelToEntity(object);
+        
+        return object;
     }
 
     adaptEntityToModel(entity) {
@@ -21,6 +20,7 @@ export default class AbstractMapper {
         for (const key of keys) {
             model[key] = entity[key];
         }
+        return model;
     }
 
     adaptModelToEntity(model) {
@@ -29,5 +29,6 @@ export default class AbstractMapper {
         for (const key of keys) {
             entity[key] = model[key];
         }
+        return entity;
     }
 }

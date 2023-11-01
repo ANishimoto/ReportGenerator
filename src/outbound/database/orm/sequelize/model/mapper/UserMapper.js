@@ -9,29 +9,19 @@ export default class UserMapper extends AbstractMapper {
     }
 
     adapt(object) {
-        switch (object.constructor.name) {
-            case `${User.constructor.name}`:
-                return this.adaptEntityToModel(object);
-            case `${UserModel.constructor.name}`:
-                return this.adaptModelToEntity(object);
-            default:
-                return object;
-        }
-    }
-
-    adaptEntityToModel(entity) {
-        const model = new UserModel();
-        const keys = Object.keys(entity);
-        for (const key of keys) {
-            model[key] = entity[key];
-        }
+        if (object instanceof UserModel)
+            return this.adaptModelToEntity(object);
+        
+        return object;
     }
 
     adaptModelToEntity(model) {
         const entity = new User();
-        const keys = Object.keys(model);
-        for (const key of keys) {
-            entity[key] = model[key];
-        }
+        
+        entity.id = model.id;
+        entity.login = model.login;
+        entity.status = model.status;
+
+        return entity;
     }
 }

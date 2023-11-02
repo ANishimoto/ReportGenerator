@@ -1,5 +1,10 @@
 FROM node:20-alpine3.18
 
+RUN mkdir -p /app/node_modules && chown -R node:node /app
+
+# Defina o diretório de trabalho no container
+WORKDIR /app
+
 # Copie o package.json e o pnpm-lock.yaml
 COPY package*.json .
 
@@ -7,9 +12,8 @@ COPY package*.json .
 RUN npm install
 
 # Copie os arquivos locais para o container
-COPY . .
+COPY --chown=node:node . .
 
-# Defina o diretório de trabalho no container
-WORKDIR /app
+EXPOSE 8080
 
 CMD ["npm", "run", "start"]

@@ -1,6 +1,8 @@
 //routes
 import example from './routes/example.js';
 import userRoutes from './routes/userRoutes.js';
+import templateTypeRoutes from './routes/templateTypeRoutes.js';
+import templateRoutes from './routes/templateRoutes.js';
 
 import express from 'express';
 import cors from 'cors';
@@ -24,6 +26,8 @@ class RouterController {
     routes() {
         this.express.use(`${process.env.BASE_URI}`, example);
         this.express.use(`${process.env.BASE_URI}`, userRoutes);
+        this.express.use(`${process.env.BASE_URI}`, templateTypeRoutes);
+        this.express.use(`${process.env.BASE_URI}`, templateRoutes);
     }
 }
 

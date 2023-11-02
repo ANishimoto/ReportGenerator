@@ -13,7 +13,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=DEV nodemon index",
     "start": "cross-env NODE_ENV=DEV node index",
-    "migrate": "cd src/outbound/database/orm/sequelize && cross-env NODE_ENV=DEV npx sequelize-cli db:migrate --migrations-path migration",
+    "migrate": "cd src/outbound/database/orm/sequelize && cross-env NODE_ENV=DEV npx sequelize-cli db:migrate --config ../../../../../.sequelize_config.cjs --migrations-path migration",
     "test": "jest --watchAll --collectCoverage",
     "lint": "npx eslint src/*"
   },

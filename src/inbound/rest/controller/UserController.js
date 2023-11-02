@@ -1,6 +1,6 @@
 import UserService from "../../../outbound/service/UserService.js";
 import AbstractController from "./AbstractController.js";
-import CreateUserUseCase from '../../../core/useCase/user/CreateUserUseCase.js';
+import CreateUserUseCase from "../../../core/useCase/user/CreateUserUseCase.js";
 import FindAllUsersUseCase from "../../../core/useCase/user/FindAllUsersUseCase.js";
 import FindOneUserUseCase from "../../../core/useCase/user/FindOneUserUseCase.js";
 import UserFilter from "../filter/UserFilter.js";

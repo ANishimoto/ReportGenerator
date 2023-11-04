@@ -4,10 +4,11 @@ import TemplateTypeModel from "../model/TemplateTypeModel.js";
 
 export default class TemplateTypeRepository extends ITemplateTypeRepository {
     constructor () {
-        super(TemplateTypeModel.init());
+        super();
     }
 
     async save(templateType) {
+        this.createConnection(TemplateTypeModel);
         return await this.connection.create(
             {
                 name: templateType.name,
@@ -18,6 +19,7 @@ export default class TemplateTypeRepository extends ITemplateTypeRepository {
     }
 
     async update(templateType, filter) {
+        this.createConnection(TemplateTypeModel);
         const count = await this.connection.update(
             {
                 name: templateType.name,
@@ -36,6 +38,7 @@ export default class TemplateTypeRepository extends ITemplateTypeRepository {
     }
 
     async delete(filter) {
+        this.createConnection(TemplateTypeModel);
         return await this.connection.update(
             {
                 status: INATIVO
@@ -45,10 +48,12 @@ export default class TemplateTypeRepository extends ITemplateTypeRepository {
     }
 
     async findAll(filter) {
+        this.createConnection(TemplateTypeModel);
         return await this.connection.findAndCountAll(filter);
     }
 
     async findOne(filter) {
+        this.createConnection(TemplateTypeModel);
         return await this.connection.findOne(filter);
     }
 }

@@ -4,10 +4,11 @@ import UserModel from "../model/UserModel.js";
 
 export default class UserRepository extends IUserRepository {
     constructor () {
-        super(UserModel.init());
+        super();
     }
 
     async save(user) {
+        this.createConnection(UserModel);
         return await this.connection.create(
             {
                 login: user.login,
@@ -18,6 +19,7 @@ export default class UserRepository extends IUserRepository {
     }
 
     async update(user, filter) {
+        this.createConnection(UserModel);
         const count = await this.connection.update(
             {
                 login: user.login,
@@ -36,6 +38,7 @@ export default class UserRepository extends IUserRepository {
     }
 
     async delete(filter) {
+        this.createConnection(UserModel);
         return await this.connection.update(
             {
                 status: INATIVO
@@ -45,10 +48,12 @@ export default class UserRepository extends IUserRepository {
     }
 
     async findAll(filter) {
+        this.createConnection(UserModel);
         return await this.connection.findAndCountAll(filter);
     }
 
     async findOne(filter) {
+        this.createConnection(UserModel);
         return await this.connection.findOne(filter);
     }
 }

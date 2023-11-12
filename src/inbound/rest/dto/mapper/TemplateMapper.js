@@ -4,11 +4,14 @@ import TemplateType from '../../../../core/domain/TemplateType.js';
 import TemplateVersion from '../../../../core/domain/TemplateVersion.js';
 import TemplateDTOForList from '../response/TemplateDTOForList.js';
 import TemplateTypeMapper from './TemplateTypeMapper.js';
+import TemplateDTOForRead from '../response/TemplateDTOForRead.js';
+import TemplateVersionMapper from './TemplateVersionMapper.js';
 
 export default class TemplateMapper extends AbstractMapper {
     constructor() {
         super();
         this.templateTypeMapper = new TemplateTypeMapper();
+        this.templateVersionMapper = new TemplateVersionMapper();
     }
 
     adaptRequestDTOToEntity(dto) {
@@ -35,6 +38,20 @@ export default class TemplateMapper extends AbstractMapper {
         dto.title = entity.title;
         dto.status = entity.status;
         dto.type = this.templateTypeMapper.adaptEntityToResponseDTOForList(entity.templateType);
+
+        return dto;
+    }
+
+    adaptEntityToResponseDTOForRead(entity) {
+        const dto = new TemplateDTOForRead();
+        
+        dto.id = entity.id;
+        dto.title = entity.title;
+        dto.status = entity.status;
+        dto.type = this.templateTypeMapper.adaptEntityToResponseDTOForList(entity.templateType);
+        dto.currentVersion = this.templateVersionMapper.adaptEntityToResponseDTOForList(entity.templateVersions.find(version => {
+            return version.status = true;
+        }));
 
         return dto;
     }

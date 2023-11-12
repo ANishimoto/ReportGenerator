@@ -1,12 +1,23 @@
 import ITemplateService from '../../core/service/ITemplateService.js';
-import TemplateFilterMapper from '../database/orm/sequelize/filter/mapper/TemplateFilterMapper.js';
+
+//Domain Mapper
 import TemplateMapper from '../database/orm/sequelize/model/mapper/TemplateMapper.js';
 import TemplateVersionMapper from '../database/orm/sequelize/model/mapper/TemplateVersionMapper.js';
+import TemplateTypeMapper from '../database/orm/sequelize/model/mapper/TemplateTypeMapper.js';
+
+//Filter Mapper
+import TemplateFilterMapper from '../database/orm/sequelize/filter/mapper/TemplateFilterMapper.js';
+import TemplateVersionFilterMapper from '../database/orm/sequelize/filter/mapper/TemplateVersionFilterMapper.js';
+
+//Filter
+import TemplateTypeFilter from '../database/orm/sequelize/filter/TemplateTypeFilter.js';
+import TemplateVersionFilter from '../database/orm/sequelize/filter/TemplateVersionFilter.js';
+
+//Repository
 import TemplateRepository from '../database/orm/sequelize/repository/TemplateRepository.js';
 import TemplateVersionRepository from '../database/orm/sequelize/repository/TemplateVersionRepository.js';
 import TemplateTypeRepository from '../database/orm/sequelize/repository/TemplateTypeRepository.js';
-import TemplateTypeFilter from '../database/orm/sequelize/filter/TemplateTypeFilter.js';
-import TemplateTypeMapper from '../database/orm/sequelize/model/mapper/TemplateTypeMapper.js';
+import { ATIVO } from '../../core/enum/StatusEnum.js';
 
 export default class TemplateService extends ITemplateService {
     constructor({
@@ -27,6 +38,7 @@ export default class TemplateService extends ITemplateService {
         this.templateTypeMapper =  new TemplateTypeMapper();
         this.templateVersionMapper =  new TemplateVersionMapper();
         this.templateFilterMapper = new TemplateFilterMapper();
+        this.templateVersionFilterMapper = new TemplateVersionFilterMapper();
     }
 
     async createTemplate(template) {
@@ -56,9 +68,18 @@ export default class TemplateService extends ITemplateService {
             const templateTypeFilter = new TemplateTypeFilter();
             templateTypeFilter.concat({id: templateModel.templateTypeId})
             const templateTypeModel = await this.templateTypeRepository.findOne(templateTypeFilter.mountFilter());
+            
+            const templateVersionFilter = new TemplateVersionFilter();
+            templateVersionFilter.concat({
+                template_id: templateModel.id,
+                status: ATIVO
+            });
+            const templateVersionModel = await this.templateVersionRepository.findOne(templateVersionFilter.mountFilter());
+            
             const template = this.templateMapper.adapt(templateModel);
 
             template.templateType = this.templateTypeMapper.adapt(templateTypeModel);
+            template.templateVersions.push(this.templateVersionMapper.adapt(templateVersionModel));
 
             templates.push(template);
         }
@@ -81,7 +102,15 @@ export default class TemplateService extends ITemplateService {
         const templateTypeModel = await this.templateTypeRepository.findOne(templateTypeFilter.mountFilter());
         const template = this.templateMapper.adapt(templateModel);
 
+        const templateVersionFilter = new TemplateVersionFilter();
+        templateVersionFilter.concat({
+            template_id: templateModel.id,
+            status: ATIVO
+        });
+        const templateVersionModel = await this.templateVersionRepository.findOne(templateVersionFilter.mountFilter());
+        
         template.templateType = this.templateTypeMapper.adapt(templateTypeModel);
+        template.templateVersions.push(this.templateVersionMapper.adapt(templateVersionModel));
         
         return {
             template,

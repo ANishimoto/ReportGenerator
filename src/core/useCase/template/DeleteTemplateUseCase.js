@@ -17,7 +17,7 @@ export default class DeleteTemplateUseCase extends AbstractUseCase {
         ];
     }
 
-    async deleteTemplate(filter) {
+    async execute(filter) {
         return await this.executeStrategies(filter, new Result());
     }
 }

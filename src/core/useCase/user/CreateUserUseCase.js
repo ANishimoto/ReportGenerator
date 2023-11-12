@@ -25,7 +25,7 @@ export default class CreateUserUseCase extends AbstractUseCase {
         ];
     }
 
-    async createUser({user}) {
+    async execute({user}) {
         return await this.executeStrategies({user}, new Result());
     }
 }

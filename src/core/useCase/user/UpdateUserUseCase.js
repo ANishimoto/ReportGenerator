@@ -21,7 +21,7 @@ export default class UpdateUserUseCase extends AbstractUseCase {
         ];
     }
 
-    async updateUser(user, filter) {
+    async execute(user, filter) {
         return await this.executeStrategies({user, filter}, new Result());
     }
 }

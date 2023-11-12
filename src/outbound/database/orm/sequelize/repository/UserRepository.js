@@ -8,7 +8,7 @@ export default class UserRepository extends IUserRepository {
     }
 
     async save(user) {
-        this.createConnection(UserModel);
+        await this.createConnection(UserModel);
         return await this.connection.create(
             {
                 login: user.login,
@@ -19,7 +19,7 @@ export default class UserRepository extends IUserRepository {
     }
 
     async update(user, filter) {
-        this.createConnection(UserModel);
+        await this.createConnection(UserModel);
         const count = await this.connection.update(
             {
                 login: user.login,
@@ -38,7 +38,7 @@ export default class UserRepository extends IUserRepository {
     }
 
     async delete(filter) {
-        this.createConnection(UserModel);
+        await this.createConnection(UserModel);
         return await this.connection.update(
             {
                 status: INATIVO
@@ -48,12 +48,12 @@ export default class UserRepository extends IUserRepository {
     }
 
     async findAll(filter) {
-        this.createConnection(UserModel);
+        await this.createConnection(UserModel);
         return await this.connection.findAndCountAll(filter);
     }
 
     async findOne(filter) {
-        this.createConnection(UserModel);
+        await this.createConnection(UserModel);
         return await this.connection.findOne(filter);
     }
 }

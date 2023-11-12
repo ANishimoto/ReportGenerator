@@ -17,7 +17,7 @@ export default class FindAllUsersUseCase extends AbstractUseCase {
         ];
     }
 
-    async findAllUsers(filter) {
+    async execute(filter) {
         return await this.executeStrategies(filter, new Result());
     }
 }

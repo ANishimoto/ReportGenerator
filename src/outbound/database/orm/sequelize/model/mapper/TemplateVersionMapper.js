@@ -17,10 +17,13 @@ export default class TemplateVersionMapper extends AbstractMapper {
 
     adaptModelToEntity(model) {
         const entity = new TemplateVersion();
-        const keys = Object.keys(model);
-        for (const key of keys) {
-            entity[key] = model[key];
-        }
+        
+        entity.id = model.id;
+        entity.content = model.content;
+        entity.status = model.status;
+        entity.createdAt = model.createdAt;
+        entity.updatedAt = model.updatedAt;
+
         return entity;
     }
 }

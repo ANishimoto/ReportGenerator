@@ -7,7 +7,7 @@ export default class TemplateVersionRepository extends ITemplateVersionRepositor
     }
 
     async save(template) {
-        this.createConnection(TemplateVersionModel);
+        await this.createConnection(TemplateVersionModel);
         return await this.connection.create(
             {
                 content: template.templateVersions[0].content,
@@ -18,22 +18,22 @@ export default class TemplateVersionRepository extends ITemplateVersionRepositor
     }
 
     async update(template, filter) {
-        this.createConnection(TemplateVersionModel);
+        await this.createConnection(TemplateVersionModel);
         throw new Error(`Method update of ${this.constructor.name} should not be used!`);
     }
 
     async delete(filter) {
-        this.createConnection(TemplateVersionModel);
+        await this.createConnection(TemplateVersionModel);
         throw new Error(`Method delete of ${this.constructor.name} should not be used!`);      
     }
 
     async findAll(filter) {
-        this.createConnection(TemplateVersionModel);
+        await this.createConnection(TemplateVersionModel);
         return await this.connection.findAndCountAll(filter);
     }
 
     async findOne(filter) {
-        this.createConnection(TemplateVersionModel);
+        await this.createConnection(TemplateVersionModel);
         return await this.connection.findOne(filter);
     }
 }

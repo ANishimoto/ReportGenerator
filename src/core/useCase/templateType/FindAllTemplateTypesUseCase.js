@@ -17,7 +17,7 @@ export default class FindAllTemplateTypesUseCase extends AbstractUseCase {
         ];
     }
 
-    async findAllTemplateTypes(filter) {
+    async execute(filter) {
         return await this.executeStrategies(filter, new Result());
     }
 }

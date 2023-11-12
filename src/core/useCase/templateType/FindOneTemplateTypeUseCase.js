@@ -17,7 +17,7 @@ export default class FindOneTemplateTypeUseCase extends AbstractUseCase {
         ];
     }
 
-    async findOneTemplateType(filter) {
+    async execute(filter) {
         return await this.executeStrategies(filter, new Result());
     }
 }

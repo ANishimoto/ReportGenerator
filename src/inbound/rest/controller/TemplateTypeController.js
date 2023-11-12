@@ -1,15 +1,15 @@
 import AbstractController from "./AbstractController.js";
-import TemplateTypeService from "../../../outbound/service/TemplateTypeService.js";
-import CreateTemplateTypeUseCase from '../../../core/useCase/templateType/CreateTemplateTypeUseCase.js';
-import FindAllTemplateTypesUseCase from "../../../core/useCase/templateType/FindAllTemplateTypesUseCase.js";
-import FindOneTemplateTypeUseCase from "../../../core/useCase/templateType/FindOneTemplateTypeUseCase.js";
-import DeleteTemplateTypeUseCase from "../../../core/useCase/templateType/DeleteTemplateTypeUseCase.js";
-import UpdateTemplateTypeUseCase from "../../../core/useCase/templateType/UpdateTemplateTypeUseCase.js";
+import TemplateTypeDTO from "../dto/request/TemplateTypeDTO.js";
 import TemplateTypeFilter from "../filter/TemplateTypeFilter.js";
 import TemplateTypeFilterMapper from "../filter/mapper/TemplateTypeFilterMapper.js";
-import TemplateTypeRepository from "../../../outbound/database/orm/sequelize/repository/TemplateTypeRepository.js";
-import TemplateTypeDTO from "../dto/request/TemplateTypeDTO.js";
 import TemplateTypeMapper from "../dto/mapper/TemplateTypeMapper.js";
+import TemplateTypeRepository from "../../../outbound/database/orm/sequelize/repository/TemplateTypeRepository.js";
+import TemplateTypeService from "../../../outbound/service/TemplateTypeService.js";
+import CreateTemplateTypeUseCaseFactory from "../../../core/useCaseFactory/templateType/CreateTemplateTypeUseCaseFactory.js";
+import FindAllTemplateTypesUseCaseFactory from "../../../core/useCaseFactory/templateType/FindAllTemplateTypesUseCaseFactory.js";
+import FindOneTemplateTypeUseCaseFactory from "../../../core/useCaseFactory/templateType/FindOneTemplateTypeUseCaseFactory.js";
+import DeleteTemplateTypeUseCaseFactory from "../../../core/useCaseFactory/templateType/DeleteTemplateTypeUseCaseFactory.js";
+import UpdateTemplateTypeUseCaseFactory from "../../../core/useCaseFactory/templateType/UpdateTemplateTypeUseCaseFactory.js";
 
 export default class TemplateTypeTypeController extends AbstractController {
     constructor() {
@@ -20,33 +20,43 @@ export default class TemplateTypeTypeController extends AbstractController {
         this.delete = this.delete.bind(this);
         this.update = this.update.bind(this);
         this.templateTypeMapper = new TemplateTypeMapper();
-        this.templateTypeRepository = new TemplateTypeRepository();
-        this.templateTypeService = new TemplateTypeService({
-            templateTypeRepository: this.templateTypeRepository
-        });
-        this.createTemplateTypeUseCase = new CreateTemplateTypeUseCase({
-            templateTypeService: this.templateTypeService
-        });
-        this.findAllTemplateTypesUseCase = new FindAllTemplateTypesUseCase({
-            templateTypeService: this.templateTypeService
-        });
-        this.findOneTemplateTypeUseCase = new FindOneTemplateTypeUseCase({
-            templateTypeService: this.templateTypeService
-        });
-        this.deleteTemplateTypeUseCase = new DeleteTemplateTypeUseCase({
-            templateTypeService: this.templateTypeService
-        });
-        this.updateTemplateTypeUseCase = new UpdateTemplateTypeUseCase({
-            templateTypeService: this.templateTypeService
-        });
         this.templateTypeFilterMapper = new TemplateTypeFilterMapper();
+        this.templateTypeRepository = TemplateTypeRepository;
+        this.templateTypeService = TemplateTypeService;
+        
+        this.createTemplateTypeUseCaseFactory = new CreateTemplateTypeUseCaseFactory({
+            templateTypeService: this.templateTypeService,
+            templateTypeRepository: this.templateTypeRepository,
+        });
+        
+        this.findAllTemplateTypesUseCaseFactory = new FindAllTemplateTypesUseCaseFactory({
+            templateTypeService: this.templateTypeService,
+            templateTypeRepository: this.templateTypeRepository,
+        });
+        
+        this.findOneTemplateTypeUseCaseFactory = new FindOneTemplateTypeUseCaseFactory({
+            templateTypeService: this.templateTypeService,
+            templateTypeRepository: this.templateTypeRepository,
+        });
+        
+        this.deleteTemplateTypeUseCaseFactory = new DeleteTemplateTypeUseCaseFactory({
+            templateTypeService: this.templateTypeService,
+            templateTypeRepository: this.templateTypeRepository,
+        });
+        
+        this.updateTemplateTypeUseCaseFactory = new UpdateTemplateTypeUseCaseFactory({
+            templateTypeService: this.templateTypeService,
+            templateTypeRepository: this.templateTypeRepository,
+        });
     }
 
     async create(req, res) {
         try {
             const templateTypeDTO = new TemplateTypeDTO(req.body);
             const templateType = this.templateTypeMapper.adaptRequestDTOToEntity(templateTypeDTO);
-            const result = await this.createTemplateTypeUseCase.execute({templateType});
+            
+            const createTemplateTypeUseCase = this.createTemplateTypeUseCaseFactory.build();
+            const result = await createTemplateTypeUseCase.execute({templateType});
     
             result.data = null;
             res.status(result.status);
@@ -62,7 +72,8 @@ export default class TemplateTypeTypeController extends AbstractController {
             const templateTypeFilter = new TemplateTypeFilter(req);
             const filter = this.templateTypeFilterMapper.adapt(templateTypeFilter);
 
-            const result = await this.findAllTemplateTypesUseCase.findAllTemplateTypes(filter);
+            const findAllTemplateTypesUseCase = this.findAllTemplateTypesUseCaseFactory.build();
+            const result = await findAllTemplateTypesUseCase.execute(filter);
             const formatedResponseData = [];
 
             for (const data of result.data) {
@@ -83,8 +94,9 @@ export default class TemplateTypeTypeController extends AbstractController {
         try {
             const templateTypeFilter = new TemplateTypeFilter(req);
             const filter = this.templateTypeFilterMapper.adapt(templateTypeFilter);
-    
-            const result = await this.findOneTemplateTypeUseCase.findOneTemplateType(filter);
+
+            const findOneTemplateTypeUseCase = this.findOneTemplateTypeUseCaseFactory.build();
+            const result = await findOneTemplateTypeUseCase.execute(filter);
             const formatedResponseData = [];
     
             for (const data of result.data) {
@@ -107,8 +119,9 @@ export default class TemplateTypeTypeController extends AbstractController {
         try {
             const templateTypeFilter = new TemplateTypeFilter(req);
             const filter = this.templateTypeFilterMapper.adapt(templateTypeFilter);
-    
-            const result = await this.deleteTemplateTypeUseCase.deleteTemplateType(filter);
+
+            const deleteTemplateTypeUseCase = this.deleteTemplateTypeUseCaseFactory.build();
+            const result = await deleteTemplateTypeUseCase.execute(filter);
     
             res.status(result.status);
             res.send(result);
@@ -127,7 +140,8 @@ export default class TemplateTypeTypeController extends AbstractController {
             templateTypeDTO.id = req.params.id;
             const templateType = this.templateTypeMapper.adaptRequestDTOToEntity(templateTypeDTO);
             
-            const result = await this.updateTemplateTypeUseCase.updateTemplateType({templateType}, filter);
+            const updateTemplateTypeUseCase = this.updateTemplateTypeUseCaseFactory.build();
+            const result = await updateTemplateTypeUseCase.execute({templateType}, filter);
             
             result.data = '';
             res.status(result.status);

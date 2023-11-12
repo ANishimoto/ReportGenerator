@@ -21,7 +21,7 @@ export default class UpdateTemplateTypeUseCase extends AbstractUseCase {
         ];
     }
 
-    async updateTemplateType({templateType}, filter) {
+    async execute({templateType}, filter) {
         return await this.executeStrategies({templateType, filter}, new Result());
     }
 }

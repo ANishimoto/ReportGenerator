@@ -8,7 +8,7 @@ export default class TemplateTypeRepository extends ITemplateTypeRepository {
     }
 
     async save(templateType) {
-        this.createConnection(TemplateTypeModel);
+        await this.createConnection(TemplateTypeModel);
         return await this.connection.create(
             {
                 name: templateType.name,
@@ -19,7 +19,7 @@ export default class TemplateTypeRepository extends ITemplateTypeRepository {
     }
 
     async update(templateType, filter) {
-        this.createConnection(TemplateTypeModel);
+        await this.createConnection(TemplateTypeModel);
         const count = await this.connection.update(
             {
                 name: templateType.name,
@@ -38,7 +38,7 @@ export default class TemplateTypeRepository extends ITemplateTypeRepository {
     }
 
     async delete(filter) {
-        this.createConnection(TemplateTypeModel);
+        await this.createConnection(TemplateTypeModel);
         return await this.connection.update(
             {
                 status: INATIVO
@@ -48,12 +48,12 @@ export default class TemplateTypeRepository extends ITemplateTypeRepository {
     }
 
     async findAll(filter) {
-        this.createConnection(TemplateTypeModel);
+        await this.createConnection(TemplateTypeModel);
         return await this.connection.findAndCountAll(filter);
     }
 
     async findOne(filter) {
-        this.createConnection(TemplateTypeModel);
+        await this.createConnection(TemplateTypeModel);
         return await this.connection.findOne(filter);
     }
 }

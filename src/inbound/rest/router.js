@@ -1,6 +1,7 @@
 //routes
 import example from './routes/example.js';
 import userRoutes from './routes/userRoutes.js';
+import fileGenerateRoutes from './routes/fileGenerateRoutes.js';
 import templateTypeRoutes from './routes/templateTypeRoutes.js';
 import templateRoutes from './routes/templateRoutes.js';
 
@@ -28,6 +29,7 @@ class RouterController {
         this.express.use(`${process.env.BASE_URI}`, userRoutes);
         this.express.use(`${process.env.BASE_URI}`, templateTypeRoutes);
         this.express.use(`${process.env.BASE_URI}`, templateRoutes);
+        this.express.use(`${process.env.BASE_URI}/file/generate`, fileGenerateRoutes);
     }
 }
 

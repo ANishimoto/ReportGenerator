@@ -1,11 +1,13 @@
 import fs from 'fs';
 
+import IPuppeteerService from '../../core/service/IPuppeteerService.js';
 import { pipeline } from 'stream';
 import { promisify } from 'util';
 import puppeteer from 'puppeteer';
 
-export default class PuppeteerService {
+export default class PuppeteerService extends IPuppeteerService {
     constructor() {
+        super();
         this.createFile = this.createFile.bind(this);
     }
 

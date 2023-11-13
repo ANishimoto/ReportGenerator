@@ -1,8 +1,8 @@
-import ITemplateRepository from "../../../../../core/repository/ITemplateRepository.js";
+import AbstractTemplateRepository from "../../../../../core/repository/AbstractTemplateRepository.js";
 import { INATIVO } from "../../../../../core/enum/StatusEnum.js";
 import TemplateModel from "../model/TemplateModel.js";
 
-export default class TemplateRepository extends ITemplateRepository {
+export default class TemplateRepository extends AbstractTemplateRepository {
     constructor () {
         super();
     }

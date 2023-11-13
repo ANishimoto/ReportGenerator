@@ -1,8 +1,8 @@
-import IUserRepository from "../../../../../core/repository/IUserRepository.js";
+import AbstractUserRepository from "../../../../../core/repository/AbstractUserRepository.js";
 import { INATIVO } from "../../../../../core/enum/StatusEnum.js";
 import UserModel from "../model/UserModel.js";
 
-export default class UserRepository extends IUserRepository {
+export default class UserRepository extends AbstractUserRepository {
     constructor () {
         super();
     }

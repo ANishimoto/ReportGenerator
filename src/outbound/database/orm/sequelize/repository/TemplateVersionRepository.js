@@ -1,7 +1,7 @@
-import ITemplateVersionRepository from "../../../../../core/repository/ITemplateVersionRepository.js";
+import AbstractTemplateVersionRepository from "../../../../../core/repository/AbstractTemplateVersionRepository.js";
 import TemplateVersionModel from "../model/TemplateVersionModel.js";
 
-export default class TemplateVersionRepository extends ITemplateVersionRepository {
+export default class TemplateVersionRepository extends AbstractTemplateVersionRepository {
     constructor () {
         super();
     }

@@ -6,13 +6,11 @@ export default class FileGenerateConfigDTO extends AbstractDTO {
         originalname = '',
         filename = '',
         path = '',
-        delimiter = ';',
     } = {}) {
         super();
         this.template = template;
         this.originalName = originalname;
         this.fileName = filename;
         this.path = path.replace('\\', '/');
-        this.delimiter = delimiter;
     }
 }

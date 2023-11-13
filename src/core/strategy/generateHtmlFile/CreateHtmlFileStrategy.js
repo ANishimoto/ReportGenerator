@@ -18,7 +18,7 @@ export default class CreateHtmlFileStrategy extends AbstractStrategy {
         try {
             const data = {
                 filePath: `../../${ejsFilePath}`,
-                data: {}
+                data: fileGenerateConfig.data
             };
             fileGenerateConfig = await this.fileService.createHTMLFile(fileGenerateConfig, data);
             fileGenerateConfig.outputFileExtension = '.html';

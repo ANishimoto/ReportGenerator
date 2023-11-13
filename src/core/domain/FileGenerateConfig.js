@@ -9,7 +9,7 @@ export default class FileGenerateConfig extends AbstractEntity {
         path = '',
         outputFileName = '',
         outputFileExtension = '',
-        delimiter = ';',
+        data = {},
         pdfOptions = {}
     } = {}) {
         super();
@@ -17,6 +17,5 @@ export default class FileGenerateConfig extends AbstractEntity {
         this.originalName = originalName;
         this.fileName = fileName;
         this.path = path;
-        this.delimiter = delimiter;
     }
 }

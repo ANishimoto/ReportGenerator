@@ -89,5 +89,28 @@ export default class FileService extends IFileService {
 
         return fileGenerateConfig;
     }
+
+    async createCSVFile(fileGenerateConfig, data) {
+        const promisedPipeline = promisify(pipeline);
+
+        const fileDirPath = fileGenerateConfig.path;
+        const filePath = `${fileDirPath}/${fileGenerateConfig.outputFileName}`;
+
+        const readable = Readable({
+            async read() {
+                const buffer = await ejs.renderFile(`${filePath}${fileGenerateConfig.outputFileExtension}`, data);
+                this.push(buffer);
+                this.push(null);
+            }
+        });
+
+        
+        await promisedPipeline(
+            readable,
+            fs.createWriteStream(`${filePath}.csv`)
+        );
+
+        return fileGenerateConfig;
+    }
     
 }

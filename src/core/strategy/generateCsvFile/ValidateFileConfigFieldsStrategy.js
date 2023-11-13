@@ -1,3 +1,4 @@
+import fs from 'fs';
 import FileGenerateConfig from '../../domain/FileGenerateConfig.js';
 import AbstractFilter from '../../filter/AbstractFilter.js';
 import Result from '../../util/Result.js';
@@ -41,6 +42,17 @@ export default class ValidateFileConfigFieldsStrategy extends AbstractStrategy {
                 && 
             !fileGenerateConfig.path.length > 0) {
             result.error.push('É necessário informar uma fonte de dados!');
+        } else {
+            const filePath = `${fileGenerateConfig.path}/${fileGenerateConfig.fileName}`;
+            try {
+                const fileData = fs.readFileSync(filePath);
+                const fileDataJson = JSON.parse(fileData);
+                fileGenerateConfig.data = fileDataJson;
+            } catch (error) {
+                console.log(error);
+                if (error instanceof SyntaxError)
+                    result.error.push('A fonte de dados informada não é um JSON!');
+            }
         }
 
         if (result.error.length > 0) {

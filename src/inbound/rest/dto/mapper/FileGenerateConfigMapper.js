@@ -13,7 +13,6 @@ export default class FileGenerateConfigMapper extends AbstractMapper {
         fileGenerateConfig.originalName = dto.originalName;
         fileGenerateConfig.fileName = dto.fileName;
         fileGenerateConfig.path = dto.path;
-        fileGenerateConfig.delimiter = dto.delimiter;
 
         return fileGenerateConfig;
     }

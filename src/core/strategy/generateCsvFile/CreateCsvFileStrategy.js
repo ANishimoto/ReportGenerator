@@ -14,9 +14,7 @@ export default class CreateCsvFileStrategy extends AbstractStrategy {
 
     async execute({fileGenerateConfig = FileGenerateConfig()}, result = this.result) {
         try {
-            const data = {
-                data: {}
-            };
+            const data = fileGenerateConfig.data
             fileGenerateConfig = await this.fileService.createCSVFile(fileGenerateConfig, data);
             fileGenerateConfig.outputFileExtension = '.csv';
             result.status = 201;

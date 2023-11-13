@@ -131,7 +131,6 @@ export default class FileGenerateController extends AbstractController {
             if(result.status != 201) {
                 res.send(result);
             } else {
-                console.log(result.data.entity);
                 if (fs.existsSync(result.data.entity.path)) {
                     res.attachment(`${result.data.entity.outputFileName}${result.data.entity.outputFileExtension}`);
                     result.data.stream.pipe(res).on('close', () => {
@@ -172,7 +171,6 @@ export default class FileGenerateController extends AbstractController {
             if(result.status != 201) {
                 res.send(result);
             } else {
-                console.log(result.data.entity);
                 if (fs.existsSync(result.data.entity.path)) {
                     res.attachment(`${result.data.entity.outputFileName}${result.data.entity.outputFileExtension}`);
                     result.data.stream.pipe(res).on('close', () => {

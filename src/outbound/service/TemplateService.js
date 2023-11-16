@@ -60,7 +60,7 @@ export default class TemplateService extends ITemplateService {
     async findAllTemplates(filter) {
         const templateFilter = this.templateFilterMapper.adapt(filter);
         filter = templateFilter.mountFilter();
-
+console.log(filter);
         const templateModels = await this.templateRepository.findAll(filter);
         
         const templates = [];

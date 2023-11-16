@@ -42,6 +42,11 @@ export default class TemplateFilterMapper {
                 fields[key] = templateFilter.filter[key];
                 continue;
             }
+    
+            if (key === 'templateTypeId') {
+                fields[key] = templateFilter.filter[key];
+                continue;
+            }
         }
 
         if (Object.keys(fields).length > 0) {

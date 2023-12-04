@@ -5,6 +5,7 @@ import AbstractUseCase from "../AbstractUseCase.js";
 import ValidateFileConfigFieldsStrategy from "../../strategy/generateTextFile/ValidateFileConfigFieldsStrategy.js";
 import CreateTextFileStrategy from "../../strategy/generateTextFile/CreateTextFileStrategy.js";
 import CreateEjsFileStrategy from "../../strategy/generateTextFile/CreateEjsFileStrategy.js";
+import GetTextFileStreamStrategy from "../../strategy/generateTextFile/GetTextFileStreamStrategy.js";
 
 export default class GenerateTextFileUseCase extends AbstractUseCase {
     constructor ({

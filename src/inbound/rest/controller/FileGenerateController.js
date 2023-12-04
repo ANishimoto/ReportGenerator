@@ -15,7 +15,9 @@ export default class FileGenerateController extends AbstractController {
     constructor() {
         super();
         this.generateTextFile = this.generateTextFile.bind(this);  
+        this.generateCsvFile = this.generateCsvFile.bind(this);  
         this.generatePdfFile = this.generatePdfFile.bind(this);  
+        this.generateHtmlFile = this.generateHtmlFile.bind(this);  
         this.fileGenerateConfigMapper = new FileGenerateConfigMapper();
         this.templateService = TemplateService;
         this.fileService = FileService;

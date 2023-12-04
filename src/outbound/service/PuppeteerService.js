@@ -12,7 +12,10 @@ export default class PuppeteerService extends IPuppeteerService {
     }
 
     async createFile(fileGenerateConfig) {
-        const browser = await puppeteer.launch({headless: "new"});
+        const browser = await puppeteer.launch({
+            headless: "new",
+            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH
+        });
         const page = await browser.newPage();
 
         const filePath = `${fileGenerateConfig.path}/${fileGenerateConfig.outputFileName}`;

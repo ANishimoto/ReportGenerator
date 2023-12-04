@@ -15,7 +15,8 @@
     "start": "cross-env NODE_ENV=PRD node index",
     "migrate": "cd src/outbound/database/orm/sequelize && cross-env NODE_ENV=DEV npx sequelize-cli db:migrate --config ../../../../../.sequelize_config.cjs --migrations-path migration",
     "test": "jest --watchAll --collectCoverage",
-    "lint": "npx eslint src/*"
+    "lint": "npx eslint src/*",
+    "puppeteer": "node node_modules/puppeteer/install.js"
   },
   "devDependencies": {
     "eslint": "^8.0.1",

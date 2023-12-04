@@ -22,11 +22,11 @@ export default class FileGenerateController extends AbstractController {
         this.templateService = TemplateService;
         this.fileService = FileService;
         this.puppeteerService = PuppeteerService;
-        this.generateTextFileUseCase = new GenerateTextFileUseCaseFactory({
+        this.generateTextFileUseCaseFactory = new GenerateTextFileUseCaseFactory({
             templateService: this.templateService,
             fileService: this.fileService,
         });
-        this.generateCsvFileUseCase = new GenerateCsvFileUseCaseFactory({
+        this.generateCsvFileUseCaseFactory = new GenerateCsvFileUseCaseFactory({
             templateService: this.templateService,
             fileService: this.fileService,
         });

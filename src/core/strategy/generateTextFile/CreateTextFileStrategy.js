@@ -14,7 +14,9 @@ export default class CreateTextFileStrategy extends AbstractStrategy {
 
     async execute({fileGenerateConfig = FileGenerateConfig()}, result = this.result) {
         try {
-            const data = fileGenerateConfig.data;
+            const data = {
+                data: fileGenerateConfig.data
+            };
             fileGenerateConfig = await this.fileService.createTXTFile(fileGenerateConfig, data);
             fileGenerateConfig.outputFileExtension = '.txt';
             result.status = 201;

@@ -48,22 +48,29 @@ export default class FileGenerateController extends AbstractController {
             }
             const fileGenerateConfigDTO = new FileGenerateConfigDTO({...req.body, ...req.file});
             const fileGenerateConfig = this.fileGenerateConfigMapper.adaptRequestDTOToEntity(fileGenerateConfigDTO);
+            const newPath = `${process.env.TEMP_UPLOAD_DIR}/${randomUUID()}`;
+
+            if (fs.existsSync(fileGenerateConfig.path)) {
+                fs.mkdirSync(newPath);
+                fs.rename(fileGenerateConfig.path, `${newPath}/${fileGenerateConfig.fileName}`, (err) => {
+                    if (err) {
+                      console.error(`Erro ao mover o arquivo: ${err}`);
+                    }
+                });
+                fileGenerateConfig.path = newPath;
+            }
 
             const generateTextFileUseCase = this.generateTextFileUseCaseFactory.build();
             const result = await generateTextFileUseCase.execute({fileGenerateConfig});
-    
-            if (fs.existsSync(req.file.path)) {
-                fs.rmSync(req.file.path);
-            }
 
             res.status(result.status);
             if(result.status != 201) {
                 res.send(result);
             } else {
-                if (fs.existsSync(result.data.filePath)) {
-                    res.attachment(result.data.fileName);
-                    fs.createReadStream(result.data.filePath).pipe(res).on('close', () => {
-                        fs.rmSync(result.data.filePath);
+                if (fs.existsSync(result.data.entity.path)) {
+                    res.attachment(`${result.data.entity.outputFileName}${result.data.entity.outputFileExtension}`);
+                    result.data.stream.pipe(res).on('close', () => {
+                        fs.rmSync(result.data.entity.path, {recursive: true});
                     });
                 }
             }
@@ -81,22 +88,29 @@ export default class FileGenerateController extends AbstractController {
             }
             const fileGenerateConfigDTO = new FileGenerateConfigDTO({...req.body, ...req.file});
             const fileGenerateConfig = this.fileGenerateConfigMapper.adaptRequestDTOToEntity(fileGenerateConfigDTO);
+            const newPath = `${process.env.TEMP_UPLOAD_DIR}/${randomUUID()}`;
+            
+            if (fs.existsSync(fileGenerateConfig.path)) {
+                fs.mkdirSync(newPath);
+                fs.rename(fileGenerateConfig.path, `${newPath}/${fileGenerateConfig.fileName}`, (err) => {
+                    if (err) {
+                      console.error(`Erro ao mover o arquivo: ${err}`);
+                    }
+                });
+                fileGenerateConfig.path = newPath;
+            }
 
             const generateCsvFileUseCase = this.generateCsvFileUseCaseFactory.build();
             const result = await generateCsvFileUseCase.execute({fileGenerateConfig});
-    
-            if (fs.existsSync(req.file.path)) {
-                fs.rmSync(req.file.path);
-            }
 
             res.status(result.status);
             if(result.status != 201) {
                 res.send(result);
             } else {
-                if (fs.existsSync(result.data.filePath)) {
-                    res.attachment(result.data.fileName);
-                    fs.createReadStream(result.data.filePath).pipe(res).on('close', () => {
-                        fs.rmSync(result.data.filePath);
+                if (fs.existsSync(result.data.entity.path)) {
+                    res.attachment(`${result.data.entity.outputFileName}${result.data.entity.outputFileExtension}`);
+                    result.data.stream.pipe(res).on('close', () => {
+                        fs.rmSync(result.data.entity.path, {recursive: true});
                     });
                 }
             }

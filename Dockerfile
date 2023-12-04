@@ -1,6 +1,7 @@
 FROM centos:7
 
-RUN curl -sL https://rpm.nodesource.com/setup_20.x | bash -
+RUN yum install https://rpm.nodesource.com/pub_20.x/nodistro/repo/nodesource-release-nodistro-1.noarch.rpm -y
+RUN yum install nodejs -y --setopt=nodesource-nodejs.module_hotfixes=1
 RUN yum clean all
 RUN yum makecache fast
 RUN yum install -y gcc-c++ make
